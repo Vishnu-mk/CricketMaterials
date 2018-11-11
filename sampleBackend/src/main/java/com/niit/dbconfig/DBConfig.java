@@ -16,8 +16,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.niit.dao.ProductDao;
 import com.niit.dao.ProductDaoImpl;
+import com.niit.model.Authorities;
+import com.niit.model.BillingAddress;
+import com.niit.model.CartItem;
 import com.niit.model.Category;
+import com.niit.model.Customer;
+import com.niit.model.CustomerOrder;
 import com.niit.model.Product;
+import com.niit.model.ShippingAddress;
+import com.niit.model.User;
 
 @Configuration
 @ComponentScan("com.niit")
@@ -47,16 +54,17 @@ public class DBConfig {
 		lsf.addProperties(hibernateProperties);
 		//Class[] classes=new Class[]{Product.class};
 		System.out.println("SessionFactory bean" +lsf);
-		return lsf.addAnnotatedClasses(new Class[]{Product.class,Category.class}).buildSessionFactory();
+		return lsf.addAnnotatedClasses(new Class[]{Product.class,Category.class,Customer.class,User.class,Authorities.class,ShippingAddress.class,BillingAddress.class,CartItem.class,CustomerOrder.class}).buildSessionFactory();
+	}
+	
+	@Bean
+	public HibernateTransactionManager hibtransManagement()
+	{
+		return new HibernateTransactionManager(sessionfactory());
 	}
 	@Bean(name="productdao")
 	public ProductDao getProductDao()
 	{
 		return new ProductDaoImpl();
-	}
-	@Bean
-	public HibernateTransactionManager hibtransManagement()
-	{
-		return new HibernateTransactionManager(sessionfactory());
 	}
 }

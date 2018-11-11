@@ -1,6 +1,8 @@
 
 package com.niit.dao;
 
+import java.util.List;
+
 import com.niit.model.Product;
 
 public interface ProductDao {
@@ -8,5 +10,7 @@ public interface ProductDao {
 	Product getProduct(int id);
 	void updateProduct(Product product);
 	Product deleteProduct(int id);
+	List<Product> getAllProducts();
+	
 
 }

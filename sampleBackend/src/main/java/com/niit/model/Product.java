@@ -6,18 +6,35 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class Product {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	@NotEmpty(message="ProductName cannot be empty")
 	private String productName;
+	@NotEmpty(message="productdescription is mandatory")
 	private String productDesc;
+	@Min(value=0,message="Quantity cannot be less than 0")
 	private int quantity;
+	@Min(value=1,message="Minimum value for price is 1")
 	private double price;
 	@ManyToOne
 	private Category category;
+	@Transient
+	private MultipartFile image;
+	public MultipartFile getImage() {
+		return image;
+	}
+	public void setImage(MultipartFile image) {
+		this.image = image;
+	}
 	public int getId() {
 		return id;
 	}
@@ -47,6 +64,12 @@ public class Product {
 	}
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	
 }

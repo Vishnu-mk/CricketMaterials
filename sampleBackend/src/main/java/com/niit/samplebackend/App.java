@@ -1,5 +1,7 @@
 package com.niit.samplebackend;
 
+import java.util.List;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.niit.dao.ProductDao;
@@ -17,15 +19,24 @@ public class App
     {
         System.out.println( "Hello World!" );
         AnnotationConfigApplicationContext context=new AnnotationConfigApplicationContext(DBConfig.class,ProductDaoImpl.class);
-        //context.scan("com.niit");
+        context.scan("com.niit");
         //context.refresh();
         ProductDao productDao=(ProductDao) context.getBean("productdao");
-        Product product=new Product();
+        
+        List<Product> products=productDao.getAllProducts();
+
+        for(Product p:products){
+         System.out.println(p.getId() + "   "+ p.getProductName()+"   " +p.getProductDesc()+"   "+ p.getPrice()+"   "+p.getQuantity());
+        
+         
+         //productDao.getProduct(116);
+     }
+      /*  Product product=new Product();
         product.setProductName("Keeping glouse");
         product.setProductDesc("Rebok");
         product.setQuantity(100);
         product.setPrice(500);
-        productDao.saveProduct(product);
+        productDao.saveProduct(product);*/
         
         /*ProductDao productDao=(ProductDao)context.getBean("productdao");
         //Product product=new Product();
